@@ -11,15 +11,24 @@ import { PostService } from '../service/post.service';
 export class FeedComponent implements OnInit {
 
   listPost: Post[] | undefined;
-  constructor(private PostService: PostService) { }
+  post: Post = new Post();
+
+  constructor(private postService: PostService) { }
 
   ngOnInit(): void {
     this.findPosts();
   }
 
   findPosts(){
-    this.PostService.getPosts().subscribe((data: any) =>{
+    this.postService.getPosts().subscribe((data: any) =>{
       this.listPost = data;
+    })
+  }
+
+  cadastrarMensagem(){
+    this.postService.postMensagem(this.post).subscribe((data: any)=>{
+      this.post = data;
+      location.assign('/feed')
     })
   }
 
